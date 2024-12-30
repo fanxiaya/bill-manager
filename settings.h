@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-int key=10; // 保存用户选择的菜单选项
+int key; // 保存用户选择的菜单选项
 
 struct bill // 账单定义
 {

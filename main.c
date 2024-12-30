@@ -5,17 +5,35 @@
 #include "function.h"
 #include "file_function.h"
 
-int main(){
+int main()
+{
     init();
-    while(key!=7){
+    do
+    {
+        printMenu();
         switch (key)
         {
         case 1:
-            addBillRecord
+            addBill();
             break;
-        
-        default:
+        case 2:
+            delete ();
+            break;
+        case 3:
+            modifyBill();
+            break;
+        case 4:
+            searchBill();
+            break;
+        case 5:
+            review();
+            break;
+        case 6:
+            help();
             break;
         }
-    }
+    } while (key != 7);
+
+    quitAndSave();
+    return 0;
 }
