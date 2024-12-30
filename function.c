@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "settings.h"
 #include "file_function.h"
-#include"encapsulation_func.h"
+#include "encapsulation_func.h"
 #include <time.h>
 #include "function.h"
 
@@ -92,24 +92,27 @@ Node *deleteBill(int id)
 void modifyBill()
 {
 
-    printf("type the bill's if you want to modify:\n");
+    printf("type the bill's id if you want to modify:\n");
     int id;
     scanf("%d", &id);
 
     Node *current = user.head;
-    while (current->item.id != id)
+    while (current->item.id != id && current != NULL)
     {
-        if (current == NULL)
-        {
-            printf("no such bill!\n");
-            return;
-        }
         current = current->next;
     }
-    Bill new_bill = createBill(); // 接收新的账目
-    current->item = new_bill;
-    printf("expected bill have been successfully modified!\n");
-    return;
+    if (current == NULL)
+    {
+        printf("no such bill!\n");
+        return;
+    }
+    else
+    {
+        Bill new_bill = createBill(); // 接收新的账目
+        current->item = new_bill;
+        printf("expected bill have been successfully modified!\n");
+        return;
+    }
 }
 
 /* 有人干坏事了，ta要把那一天的账目全删掉
@@ -121,7 +124,8 @@ void deleteDayBill()
     printf("are you sure to delete all bills of this day? think twice! (y/n)\n");
     char choice;
     scanf("n", &choice); // 确定一下是否要删除，再根据选择来做操作
-    while (getchar() != '\n'); 
+    while (getchar() != '\n')
+        ;
     if (choice == 'n')
     {
         printf("ok,no bill have been deleted\n");
@@ -132,7 +136,8 @@ void deleteDayBill()
         printf("type your bill date in this order and format:\nyear month day\n");
         int year, month, day, state = 0;
         scanf("%d%d%d", &year, &month, &day);
-        while (getchar() != '\n'); 
+        while (getchar() != '\n')
+            ;
         while (current != NULL)
         {
             if (current->item.year == year && current->item.month == month && current->item.day == day)
@@ -172,7 +177,8 @@ void printBillByDate()
     printf("what date's bills do you want to see?\ntype your date in this order and format:\nyear month day\n");
     int year, month, day;
     scanf("%d%d%d", &year, &month, &day);
-    while (getchar() != '\n'); 
+    while (getchar() != '\n')
+        ;
     printf("here you are the bills of %d-%d-%d:\n", year, month, day);
 
     // 遍历链表，打印指定日期的账目
@@ -250,15 +256,18 @@ void printBillPeriod()
     printf("type the year you want to see\n");
     int year;
     scanf("%d", &year);
-    while (getchar() != '\n'); 
+    while (getchar() != '\n')
+        ;
     printf("type the start and end date in this order and format:\nmonth1 day1 month2 day2\n");
     int month1, day1, month2, day2;
     scanf("%d%d%d%d", &month1, &day1, &month2, &day2);
-    while (getchar() != '\n'); 
+    while (getchar() != '\n')
+        ;
     printf("which type of bill do you want to see?\n1.income\t2.expenditure\t3.all\n(type 1,2 or 3)\n");
     int choice;
     scanf("%d", &choice);
-    while (getchar() != '\n'); 
+    while (getchar() != '\n')
+        ;
     Node *current = user.head;
     if (choice == 1)
     {
@@ -346,7 +355,8 @@ void printMenu()
     printf("please input your choice:\n");
     printf("------------------------------------------------------------------------------------------------\n");
     scanf("%d", &key);
-    while (getchar() != '\n'); 
+    while (getchar() != '\n')
+        ;
 }
 
 /*初始化程序并给出提示

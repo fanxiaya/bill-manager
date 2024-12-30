@@ -21,6 +21,7 @@ void addBillRecord()
     while (getchar() != '\n'); 
     new_bill.id = rand(); //随机生成id
     loadBill(new_bill);     //加载到链表中
+    printf("this bill has been added id is %d\n", new_bill.id);
 }
 
 // 从文件中读取账单记录并转换为 Bill 结构体
@@ -63,7 +64,7 @@ void loadBillsFromFile()
         loadBill(new_bill);
     }
     fclose(file);
-    printf("Bills loaded successfully from the file.\n");
+    printf("Bills loaded successfully from the file\n");
 }
 
 /* 

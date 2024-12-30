@@ -68,7 +68,7 @@ void delete()
         int id;
         char type = 'y';
         printf("type the id of the bill you want to delete:\n");
-        scanf("%c", &type);
+        scanf("%d", &id);
         while (getchar() != '\n'); 
         deleteBill(id);
 
