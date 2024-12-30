@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-int key;    // 保存用户选择的菜单选项
+int key=10; // 保存用户选择的菜单选项
 
 struct bill // 账单定义
 {
@@ -30,7 +30,12 @@ struct bill_list // 账单链表定义
     Node *tail; // 尾指针
 };
 typedef struct bill_list List;
+
 /* 初始化用户 */
-List user;  //保存一个用户
-Node* head; // list的头指针
-Node* tail; // list的尾指针
+List user;  // 保存一个用户
+void initUser()
+{
+    user.size = 0;
+    user.head = NULL;
+    user.tail = NULL;
+}

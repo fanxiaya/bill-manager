@@ -3,8 +3,19 @@
 #include <stdlib.h>
 #include "settings.h"
 #include "function.h"
+#include "file_function.h"
 
-int main()
-{
-    
+int main(){
+    init();
+    while(key!=7){
+        switch (key)
+        {
+        case 1:
+            addBillRecord
+            break;
+        
+        default:
+            break;
+        }
+    }
 }
