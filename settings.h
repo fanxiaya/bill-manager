@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-int key; // 保存用户选择的菜单选项
+#ifndef SETTINGS_H
+#define SETTINGS_H
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
 
 struct bill // 账单定义
 {
@@ -32,10 +32,7 @@ struct bill_list // 账单链表定义
 typedef struct bill_list List;
 
 /* 初始化用户 */
-List user;  // 保存一个用户
-void initUser()
-{
-    user.size = 0;
-    user.head = NULL;
-    user.tail = NULL;
-}
+extern List user;  // 保存一个用户
+
+extern int key; // 保存用户选择的菜单选项
+#endif

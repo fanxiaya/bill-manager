@@ -1,9 +1,12 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "settings.h"
-#include "function.h"
-#include "file_function.h"
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include"settings.h"
+#include"function.h"
+#include"encapsulation_func.h"
+
+int key;
+List user;
 
 int main()
 {
@@ -23,7 +26,7 @@ int main()
             modifyBill();
             break;
         case 4:
-            searchBill();
+            search();
             break;
         case 5:
             review();
