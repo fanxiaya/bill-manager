@@ -29,7 +29,7 @@ Bill getBillFromRecord(char *line)
 {
     Bill bill;
     // 读取每一行的数据
-    sscanf(line, "date:%d %d %d\tid:%d\tamount:%d\ttype:%c\tps:%s\n",&bill.year, &bill.month, &bill.day, &bill.id, &bill.amount, &bill.type, bill.ps);
+    sscanf(line, "date:%d %d %d\tid:%d\tamount:%d\ttype:%c\tps:%[^\n]\n",&bill.year, &bill.month, &bill.day, &bill.id, &bill.amount, &bill.type, bill.ps);
     return bill;
 }
 
@@ -68,7 +68,7 @@ void loadBillsFromFile()
 }
 
 /* 
-    更新record.txt文件，讲所有节点重写写入文件中
+    更新record.txt文件，讲将所有节点重新写入文件中
  */ 
 void updateBillRecord(){
     Node *current = user.head;

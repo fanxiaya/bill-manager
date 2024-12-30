@@ -72,4 +72,8 @@ void init();
  */
 void initUser();
 
+/*重置链表 
+ */
+void freeList();
+
 #endif

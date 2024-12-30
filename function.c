@@ -19,7 +19,7 @@ Bill createBill()
     while (getchar() != '\n')
         ;
     printf("type your ps for this bill:\n"); // 给这份账目的的备注
-    scanf("%s", new_bill.ps);
+    scanf("%[^\n]", new_bill.ps);
     while (getchar() != '\n')
         ;
     return new_bill;
@@ -54,15 +54,15 @@ Node *deleteBill(int id)
 
     Node *current = user.head;
     Node *previous = NULL; // 指向current的前节点
-    while (current->item.id != id)
+    while (current->item.id != id && current != NULL)
     {
-        if (current == NULL)
-        {
-            printf("no such bill!\n");
-            return NULL;
-        }
         previous = current;
         current = current->next;
+    }
+    if (current == NULL)
+    {
+        printf("no such bill!\n");
+        return NULL;
     }
     // current不可能为空且此时为指定id账目的节点，处理几种特殊情况
     Node *res = current->next;
@@ -108,7 +108,17 @@ void modifyBill()
     }
     else
     {
-        Bill new_bill = createBill(); // 接收新的账目
+        Bill new_bill;
+        printf("type the bill in this order and format:\tyear month day amount type\n");
+        int year, month, day, amount;
+        char type, ps[100];
+        scanf("%d %d %d %d %c", &new_bill.year, &new_bill.month, &new_bill.day, &new_bill.amount, &new_bill.type);
+        while (getchar() != '\n')
+            ;
+        printf("type the ps of this bill:\n");
+        scanf("%s", new_bill.ps);
+        while (getchar() != '\n')
+            ; // 接收新的账目
         current->item = new_bill;
         printf("expected bill have been successfully modified!\n");
         return;
@@ -376,4 +386,23 @@ void initUser()
     user.size = 0;
     user.head = NULL;
     user.tail = NULL;
+}
+
+/*重置链表 
+ */
+void freeList() {
+    Node *current = user.head; 
+    Node *next;
+
+    // 遍历链表释放节点
+    while (current != NULL) {
+        next = current->next; 
+        free(current);        
+        current = next;     
+    }
+
+    // 重置链表
+    user.head = NULL;
+    user.tail = NULL;
+    user.size = 0; 
 }
