@@ -36,7 +36,6 @@ int main()
             break;
         }
     } while (key != 7);
-
     quitAndSave();
     return 0;
 }

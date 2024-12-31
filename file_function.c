@@ -47,10 +47,11 @@ char* convertBillToString(Bill bill){
  */
 void loadBillsFromFile()
 {
+    freeList();
     FILE *file = fopen("record.txt", "r");
     if (file == NULL)
     {
-        printf("Failed to open file.\n");
+        printf("Failed to open file\n");
         return;
     }
 
@@ -72,7 +73,7 @@ void loadBillsFromFile()
  */ 
 void updateBillRecord(){
     Node *current = user.head;
-    FILE *file1 = fopen("record.txt", "w");
+    FILE *file1 = fopen("record.txt", "w");//清空txt
     fclose(file1);
     FILE *file2 = fopen("record.txt", "a");
 while (current!= NULL)  

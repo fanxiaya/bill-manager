@@ -43,6 +43,9 @@ void loadBill(Bill new_bill)
         user.tail->next = new_node; // 尾节点的下一个节点指向新节点
         user.tail = new_node;       // 尾节点指向新节点
     }
+    /* Test */
+      printf("Bill added to list: id=%d, amount=%d, type=%c, ps=%s\n",
+           new_bill.id, new_bill.amount, new_bill.type, new_bill.ps);
 }
 
 /* 删除单个指定id的账目
@@ -113,13 +116,12 @@ void modifyBill()
         int year, month, day, amount;
         char type, ps[100];
         scanf("%d %d %d %d %c", &new_bill.year, &new_bill.month, &new_bill.day, &new_bill.amount, &new_bill.type);
-        while (getchar() != '\n')
-            ;
+        while (getchar() != '\n');
         printf("type the ps of this bill:\n");
         scanf("%s", new_bill.ps);
-        while (getchar() != '\n')
-            ; // 接收新的账目
-        current->item = new_bill;
+        while (getchar() != '\n');
+        new_bill.id = current->item.id;
+        current->item = new_bill;        // 修改新的账目
         printf("expected bill have been successfully modified!\n");
         return;
     }
@@ -133,7 +135,7 @@ void deleteDayBill()
     Node *current = user.head;
     printf("are you sure to delete all bills of this day? think twice! (y/n)\n");
     char choice;
-    scanf("n", &choice); // 确定一下是否要删除，再根据选择来做操作
+    scanf("%c", &choice); // 确定一下是否要删除，再根据选择来做操作
     while (getchar() != '\n')
         ;
     if (choice == 'n')
@@ -226,6 +228,7 @@ void printBillById(int id)
             printf("date:%d %d %d\tid:%d\tamount:%d\ttype:%c\tps:%s\n", current->item.year, current->item.month, current->item.day, current->item.id, current->item.amount, current->item.type, current->item.ps);
             return;
         }
+        current = current->next;
     }
     printf("no such bill!\n");
     return;

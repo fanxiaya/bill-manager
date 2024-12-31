@@ -1,3 +1,1 @@
-date:2024 10 3	id:13409	amount:1002	type:C	ps:3th
-date:2024 10 4	id:13410	amount:1003	type:D	ps:4th
-date:2024 10 5	id:26842	amount:1004	type:D	ps:wds
+
