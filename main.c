@@ -34,6 +34,8 @@ int main()
         case 6:
             help();
             break;
+        default:
+            printf("Wrong input\nPlease try again\n");
         }
     } while (key != 7);
     quitAndSave();

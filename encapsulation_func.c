@@ -14,13 +14,13 @@
 void addBill()
 {
     int choice;
-    printf("what kind of operation do you want to do?\n1.add bill from txt file\n2.add bill manually\n");
+    printf("\nwhat kind of operation do you want to do?\n1.add bill from txt file\n2.add bill manually\n");
     scanf("%d", &choice);
     while (getchar() != '\n'); 
     char type = 'y';
     if (choice == 1)
     {
-        printf("make sure the txt file has been changed and saved\n");
+        printf("\nmake sure the txt file has been changed and saved\n");
         printf("type to make sure the txt file has been changed and saved correctly(y/n)\n");
         scanf("%c", &type);
         while (getchar() != '\n'); 
@@ -30,27 +30,27 @@ void addBill()
         }
         else if (type == 'n')
         {
-            printf("ok,your bill record keeps unchanged\n");
+            printf("\nok,your bill record keeps unchanged\n");
         }
         else
         {
-            printf("you type a wrong choice,so no bill have been added\n");
+            printf("\nyou type a wrong choice,so no bill have been added\n");
         }
     }
     else if (choice == 2)
     {
         addBillRecord();
-        printf("do you want to add more bills?(y/n)\n");
+        printf("\ndo you want to add more bills?(y/n)\n");
         scanf("%c", &type);
         while (getchar() != '\n'); 
         while (type != 'n')
         {
             addBillRecord();
-            printf("again?(y/n)\n");
+            printf("\nagain?(y/n)\n");
             scanf("%c", &type);
             while (getchar() != '\n'); 
         }
-        printf("all new bills have been added\n");
+        printf("\nall new bills have been added\n");
     }
     return;
 }
@@ -60,7 +60,7 @@ void addBill()
 void delete()
 {
     int choice;
-    printf("what kind of operation do you want to do?\n1.delete a bill by id\n2.delete bills by date\n3.delete all bills\n");
+    printf("\nwhat kind of operation do you want to do?\n1.delete a bill by id\n2.delete bills by date\n3.delete all bills\n");
     scanf("%d", &choice);
     while (getchar() != '\n'); 
     if (choice == 1)
@@ -71,8 +71,7 @@ void delete()
         scanf("%d", &id);
         while (getchar() != '\n'); 
         deleteBill(id);
-
-        printf("do you want to add more bills?(y/n)\n");
+        printf("\ndo you want to add more bills?(y/n)\n");
         scanf("%c", &type);
         while (getchar() != '\n'); 
         while (type != 'n')
@@ -81,7 +80,7 @@ void delete()
             scanf("%d", &id);
             while (getchar() != '\n'); 
             deleteBill(id);
-            printf("again?(y/n)\n");
+            printf("\nagain?(y/n)\n");
             scanf("%c", &type);
             while (getchar() != '\n'); 
         }
@@ -104,13 +103,13 @@ void delete()
 void search()
 {
     int choice;
-    printf("what kind of operation do you want to do?\n1.search a bill by id\n2.search bills by date\n");
+    printf("\nwhat kind of operation do you want to do?\n1.search a bill by id\n2.search bills by date\n");
     scanf("%d", &choice);
     while (getchar() != '\n'); 
     if (choice == 1)
     {
         int id;
-        printf("type the id of the bill you want to search:\n");
+        printf("\ntype the id of the bill you want to search:\n");
         scanf("%d", &id);
         while (getchar() != '\n'); 
         printBillById(id);
@@ -130,7 +129,7 @@ void search()
 void review()
 {
     int choice;
-    printf("what kind of operation do you want to do?\n1.review bills by day\n2.review bills by period\n");
+    printf("\nwhat kind of operation do you want to do?\n1.review bills by day\n2.review bills by period\n");
     scanf("%d", &choice);
     if (choice == 1)
     {
@@ -143,7 +142,7 @@ void review()
     }
     else
     {
-        printf("wrong choice!\n");
+        printf("\nwrong choice!\n");
     }
 }
 
@@ -151,16 +150,19 @@ void review()
  */
 void help()
 {
-    printf("Here are some tips if you are in error\n");
-    printf("1.keep your bill txt file's format :\ndate:year month day id:id amount:amount type:type ps:ps\n");
+    printf("author:<Fansirui>\n");
+    printf("Here are some tips if you are in error:\n");
+    printf("\n1.keep your bill txt file's format :\ndate:year month day\tid:id\tamount:amount\ttype:type\tps:ps\n");
+    printf("\nfor example:\ndate:1 1 1	id:24649	amount:1	type:A	ps:wdw ada(long blank is tab)\n");
+    printf("\n2.Don't change your bill txt when your program is running except for adding new bills from txt file\n");
+    printf("\n3.keep your input in the program in the correct format,follow the tips in the program\n");
+    printf("\n4.there is a README file in the program's directory,maybe you can read it\n");
 }
 
 /* quit 和 save选项的封装： 1.保存账单文件 2.退出程序
  */
 void quitAndSave()
 {
-    printf("the program is saving the bill file,please wait a moment...\n");
     updateBillRecord();
-    printf("saved successfully!\n");
     return;
 }

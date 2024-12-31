@@ -8,22 +8,27 @@
 #include "function.h"
 
 /*创建新账单
- *返回 新帐单new_bill(id未定义，默认为0)
+ *返回 新帐单new_bill
  */
 Bill createBill()
 {
     Bill new_bill;
     printf("type your bill date in this order and format:\n");
     printf("year month day amount type\n");
-    scanf("%d%d%d%d%c", &new_bill.year, &new_bill.month, &new_bill.day, &new_bill.amount, &new_bill.type);
+    scanf("%d%d%d%d %c", &new_bill.year, &new_bill.month, &new_bill.day, &new_bill.amount, &new_bill.type);
     while (getchar() != '\n')
         ;
+
     printf("type your ps for this bill:\n"); // 给这份账目的的备注
-    scanf("%[^\n]", new_bill.ps);
-    while (getchar() != '\n')
-        ;
+    fgets(new_bill.ps, 100, stdin);
+    int len = strlen(new_bill.ps); // 保证ps的末尾不是换行
+    if (len > 0 && new_bill.ps[len - 1] == '\n')
+    {
+        new_bill.ps[len - 1] = '\0';
+    }
     return new_bill;
 }
+
 /* 加载账目到链表尾部
  * 参数：账目new_bill
     void */
@@ -43,9 +48,6 @@ void loadBill(Bill new_bill)
         user.tail->next = new_node; // 尾节点的下一个节点指向新节点
         user.tail = new_node;       // 尾节点指向新节点
     }
-    /* Test */
-      printf("Bill added to list: id=%d, amount=%d, type=%c, ps=%s\n",
-           new_bill.id, new_bill.amount, new_bill.type, new_bill.ps);
 }
 
 /* 删除单个指定id的账目
@@ -57,7 +59,7 @@ Node *deleteBill(int id)
 
     Node *current = user.head;
     Node *previous = NULL; // 指向current的前节点
-    while (current->item.id != id && current != NULL)
+    while ( current != NULL && current->item.id != id) 
     {
         previous = current;
         current = current->next;
@@ -84,7 +86,6 @@ Node *deleteBill(int id)
     }
     user.size--;
     free(current);
-    printf("expected bill have been successfully deleted!\n");
     return res;
 }
 
@@ -95,12 +96,13 @@ Node *deleteBill(int id)
 void modifyBill()
 {
 
-    printf("type the bill's id if you want to modify:\n");
+    printf("\ntype the bill's id if you want to modify:\n");
     int id;
     scanf("%d", &id);
-
+    while (getchar() != '\n')
+        ;
     Node *current = user.head;
-    while (current->item.id != id && current != NULL)
+    while ( current != NULL && current->item.id != id)
     {
         current = current->next;
     }
@@ -111,18 +113,10 @@ void modifyBill()
     }
     else
     {
-        Bill new_bill;
-        printf("type the bill in this order and format:\tyear month day amount type\n");
-        int year, month, day, amount;
-        char type, ps[100];
-        scanf("%d %d %d %d %c", &new_bill.year, &new_bill.month, &new_bill.day, &new_bill.amount, &new_bill.type);
-        while (getchar() != '\n');
-        printf("type the ps of this bill:\n");
-        scanf("%s", new_bill.ps);
-        while (getchar() != '\n');
-        new_bill.id = current->item.id;
-        current->item = new_bill;        // 修改新的账目
-        printf("expected bill have been successfully modified!\n");
+        Bill new_bill = createBill();
+        new_bill.id = current->item.id; // 继承原来的id
+        current->item = new_bill;       // 修改新的账目
+        printf("\nexpected bill have been successfully modified!\n");
         return;
     }
 }
@@ -133,7 +127,7 @@ void modifyBill()
 void deleteDayBill()
 {
     Node *current = user.head;
-    printf("are you sure to delete all bills of this day? think twice! (y/n)\n");
+    printf("\nare you sure to delete all bills of this day? think twice! (y/n)\n");
     char choice;
     scanf("%c", &choice); // 确定一下是否要删除，再根据选择来做操作
     while (getchar() != '\n')
@@ -145,7 +139,7 @@ void deleteDayBill()
     }
     else if (choice == 'y')
     {
-        printf("type your bill date in this order and format:\nyear month day\n");
+        printf("\ntype your bill date in this order and format:\nyear month day\n");
         int year, month, day, state = 0;
         scanf("%d%d%d", &year, &month, &day);
         while (getchar() != '\n')
@@ -164,16 +158,16 @@ void deleteDayBill()
         }
         if (state == 0)
         {
-            printf("no such bill of that day \n");
+            printf("\nno such bill of that day \n");
         }
         else
         {
-            printf("all bills of that day have been deleted\n");
+            printf("\nall bills of that day have been deleted\n");
         }
     }
     else
     {
-        printf("you type a wrong choice,so no bill have been deleted\n");
+        printf("\nyou type a wrong choice,so no bill have been deleted\n");
         return;
     }
 }
@@ -186,13 +180,11 @@ void printBillByDate()
     Node *current = user.head;
     int state = 0; // 0表示未找到指定日期的账目，1表示找到了指定日期的账目
     // 输入期望的日期
-    printf("what date's bills do you want to see?\ntype your date in this order and format:\nyear month day\n");
+    printf("\nwhat date's bills do you want to see?\ntype your date in this order and format:\nyear month day\n");
     int year, month, day;
     scanf("%d%d%d", &year, &month, &day);
     while (getchar() != '\n')
         ;
-    printf("here you are the bills of %d-%d-%d:\n", year, month, day);
-
     // 遍历链表，打印指定日期的账目
     while (current != NULL)
     {
@@ -205,12 +197,12 @@ void printBillByDate()
     }
     if (state == 0)
     {
-        printf("there is no bill of %d-%d-%d\n", year, month, day);
+        printf("\nthere is no bill of %d-%d-%d\n", year, month, day);
         return;
     }
     else
     {
-        printf("that's all bills of %d-%d-%d\n", year, month, day);
+        printf("\nthat's all bills of %d-%d-%d\n", year, month, day);
         return;
     }
 }
@@ -221,17 +213,16 @@ void printBillByDate()
 void printBillById(int id)
 {
     Node *current = user.head;
-    while (current != NULL)
+    while ( current != NULL && current->item.id != id)
     {
-        if (current->item.id == id)
-        {
-            printf("date:%d %d %d\tid:%d\tamount:%d\ttype:%c\tps:%s\n", current->item.year, current->item.month, current->item.day, current->item.id, current->item.amount, current->item.type, current->item.ps);
-            return;
-        }
         current = current->next;
     }
-    printf("no such bill!\n");
-    return;
+    if (current == NULL)
+    {
+        printf("no such bill!\n");
+        return;
+    }
+    printf("date:%d %d %d\tid:%d\tamount:%d\ttype:%c\tps:%s\n",current->item.year, current->item.month, current->item.day,current->item.id, current->item.amount, current->item.type,current->item.ps);
 }
 
 /* 根据每笔账单的金额进行排序(大到小)，改变链表自身顺序
@@ -266,17 +257,17 @@ void sortBillByAmount()
 void printBillPeriod()
 {
     sortBillByAmount();
-    printf("type the year you want to see\n");
+    printf("\ntype the year you want to see\n");
     int year;
     scanf("%d", &year);
     while (getchar() != '\n')
         ;
-    printf("type the start and end date in this order and format:\nmonth1 day1 month2 day2\n");
+    printf("\ntype the start and end date in this order and format:\nmonth1 day1 month2 day2\n");
     int month1, day1, month2, day2;
     scanf("%d%d%d%d", &month1, &day1, &month2, &day2);
     while (getchar() != '\n')
         ;
-    printf("which type of bill do you want to see?\n1.income\t2.expenditure\t3.all\n(type 1,2 or 3)\n");
+    printf("\nwhich type of bill do you want to see?\n1.income\t2.expenditure\t3.all\n(type 1,2 or 3)\n");
     int choice;
     scanf("%d", &choice);
     while (getchar() != '\n')
@@ -289,11 +280,11 @@ void printBillPeriod()
         {
             if (current->item.year == year && current->item.month >= month1 && current->item.month <= month2 && current->item.day >= day1 && current->item.day <= day2 && current->item.amount > 0)
             {
-                if (current->item.type == 'A')
+                if (current->item.type == 'C')
                 {
                     count_C += current->item.amount;
                 }
-                else if (current->item.type == 'C' && current->item.amount > 0)
+                else if (current->item.type == 'D' && current->item.amount > 0)
                 {
                     count_D += current->item.amount;
                 }
@@ -302,9 +293,9 @@ void printBillPeriod()
             }
             current = current->next;
         }
-        printf("C income:%d\tD income:%d\n", count_C, count_D);
+        printf("\nC income:%d\tD income:%d\n", count_C, count_D);
         printf("total income:%d\n", count_C + count_D);
-        printf("that's all income bills you want\n");
+        printf("\nthat's all income bills you want\n");
     }
     else if (choice == 2)
     {
@@ -324,9 +315,9 @@ void printBillPeriod()
                 printf("date:%d %d %d\tid:%d\tamount:%d\ttype:%c\tps:%s\n", current->item.year, current->item.month, current->item.day, current->item.id, current->item.amount, current->item.type, current->item.ps);
             }
         }
-        printf("A expenditure:%d\tB expenditure:%d\n", count_A, count_B);
+        printf("\nA expenditure:%d\tB expenditure:%d\n", count_A, count_B);
         printf("total expenditure:%d\n", count_A + count_B);
-        printf("that's all expenditure bills you want\n");
+        printf("\nthat's all expenditure bills you want\n");
     }
     else if (choice == 3)
     {
@@ -391,21 +382,23 @@ void initUser()
     user.tail = NULL;
 }
 
-/*重置链表 
+/*重置链表
  */
-void freeList() {
-    Node *current = user.head; 
+void freeList()
+{
+    Node *current = user.head;
     Node *next;
 
     // 遍历链表释放节点
-    while (current != NULL) {
-        next = current->next; 
-        free(current);        
-        current = next;     
+    while (current != NULL)
+    {
+        next = current->next;
+        free(current);
+        current = next;
     }
 
     // 重置链表
     user.head = NULL;
     user.tail = NULL;
-    user.size = 0; 
+    user.size = 0;
 }
